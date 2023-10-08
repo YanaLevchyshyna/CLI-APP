@@ -1,38 +1,70 @@
+import { program } from 'commander';
 import * as contactsService from './contacts.js';
 
-const contactsAction = async ({ action, id, name, phone, email }) => {
+program
+  .option('-a, --action <type>', 'choose action')
+  .option('-i, --id <type>', 'user id')
+  .option('-n, --name <type>', 'user name')
+  .option('-e, --email <type>', 'user email')
+  .option('-p, --phone <type>', 'user phone');
+
+program.parse(process.argv);
+
+const argv = program.opts();
+
+const contactsAction = async ({ action, id, name, email, phone }) => {
   switch (action) {
     case 'list':
       const contactList = await contactsService.getAllContacts();
       return console.log(contactList);
-    case 'getById':
+
+    case 'get':
       const oneContact = await contactsService.getContactById(id);
       return console.log(oneContact);
-    case 'addContact':
+
+    case 'add':
       const newContact = await contactsService.addContact({
+        name,
+        email,
+        phone,
+      });
+      return console.log(newContact);
+
+    case 'update':
+      const updatedContact = await contactsService.updateContactById(id, {
         name,
         phone,
         email,
       });
-      return console.log(newContact);
+      return console.log(updatedContact);
+
+    case 'remove':
+      const deletedContact = await contactsService.deleteContactById(id);
+      return console.log(deletedContact);
+
     default:
-      console.log('Unknown action');
-      break;
+      console.warn('\x1B[31m Unknown action type!');
   }
 };
 
+contactsAction(argv);
+
 // contactsAction({ action: 'list' });
-// contactsAction({ action: 'getById', id: 'drsAJ4SHPYqZeG-83QTVW' });
-// contactsAction({ action: 'getById', id: 'qdggE76Jtbfd9eWJHrssH' });
-contactsAction({
-  action: 'addContact',
-  name: 'Anny Bridge',
-  email: 'anny_br@egmail.com',
-  phone: '(098) 120-0056',
-});
-contactsAction({
-  action: 'addContact',
-  name: 'Jacky Simpson',
-  email: 'j_simpson@egmail.com',
-  phone: '(066) 121-4412',
-});
+// contactsAction({ action: 'get', id: 'drsAJ4SHPYqZeG-83QTVW' });
+
+// contactsAction({
+//   action: 'add',
+//   name: 'Anny Bridge',
+//   phone: '(098) 120-0056',
+//   email: 'anny_br@egmail.com',
+// });
+
+// contactsAction({
+//   action: 'update',
+//   id: 'j1tEVEMQ6M1mnJCIe1B8k',
+//   name: 'Ron Vizly',
+//   phone: '(050) 893-2314',
+//   email: 'r_vizly@gmail.com',
+// });
+
+// contactsAction({ action: 'remove', id: '5SdIWESVKojW_LFutVaj5' });
