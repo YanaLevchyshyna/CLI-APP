@@ -48,23 +48,3 @@ const contactsAction = async ({ action, id, name, email, phone }) => {
 };
 
 contactsAction(argv);
-
-// contactsAction({ action: 'list' });
-// contactsAction({ action: 'get', id: 'drsAJ4SHPYqZeG-83QTVW' });
-
-// contactsAction({
-//   action: 'add',
-//   name: 'Anny Bridge',
-//   phone: '(098) 120-0056',
-//   email: 'anny_br@egmail.com',
-// });
-
-// contactsAction({
-//   action: 'update',
-//   id: 'j1tEVEMQ6M1mnJCIe1B8k',
-//   name: 'Ron Vizly',
-//   phone: '(050) 893-2314',
-//   email: 'r_vizly@gmail.com',
-// });
-
-// contactsAction({ action: 'remove', id: '5SdIWESVKojW_LFutVaj5' });
